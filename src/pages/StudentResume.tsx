@@ -1,16 +1,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import StudentSidebar from "@/components/StudentSidebar";
 import { Button } from "@/components/ui/button";
 import { Upload, FileText, CheckCircle, Sparkles } from "lucide-react";
+import { completeStep, isStepCompleted } from "@/lib/progress";
 
 const StudentResume = () => {
-  const [stage, setStage] = useState<"upload" | "analyzing" | "done">("upload");
+  const alreadyDone = isStepCompleted("resume");
+  const [stage, setStage] = useState<"upload" | "analyzing" | "done">(alreadyDone ? "done" : "upload");
   const [dragActive, setDragActive] = useState(false);
+  const navigate = useNavigate();
 
   const handleUpload = () => {
     setStage("analyzing");
-    setTimeout(() => setStage("done"), 3000);
+    setTimeout(() => {
+      completeStep("resume");
+      setStage("done");
+    }, 3000);
   };
 
   return (
@@ -64,12 +71,7 @@ const StudentResume = () => {
               <p className="text-muted-foreground">AI is extracting skills, projects, and experience</p>
               <div className="mt-6 max-w-xs mx-auto">
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-primary rounded-full"
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 3 }}
-                  />
+                  <motion.div className="h-full bg-primary rounded-full" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 3 }} />
                 </div>
               </div>
             </motion.div>
@@ -97,7 +99,7 @@ const StudentResume = () => {
               <div className="bg-accent/50 rounded-2xl p-6 mb-6 border border-primary/10">
                 <div className="flex items-center gap-3 mb-4">
                   <FileText className="w-6 h-6 text-primary" />
-                  <span className="font-semibold text-foreground">Arjun_Resume_2025.pdf</span>
+                  <span className="font-semibold text-foreground">Resume_2025.pdf</span>
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
@@ -113,7 +115,10 @@ const StudentResume = () => {
                 </div>
               </div>
 
-              <Button className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-base font-semibold">
+              <Button
+                onClick={() => navigate("/student/test")}
+                className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-base font-semibold"
+              >
                 Continue to Communication Test →
               </Button>
             </motion.div>
