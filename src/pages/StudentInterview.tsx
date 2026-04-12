@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import StudentSidebar from "@/components/StudentSidebar";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Send, Bot, User } from "lucide-react";
+import { Mic, MicOff, Send, Bot, User, Lock } from "lucide-react";
+import { isStepUnlocked, isStepCompleted, completeStep } from "@/lib/progress";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = { role: "ai" | "user"; text: string };
 
@@ -14,17 +17,58 @@ const aiQuestions = [
 ];
 
 const StudentInterview = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const unlocked = isStepUnlocked("interview");
+  const alreadyDone = isStepCompleted("interview");
+
   const [started, setStarted] = useState(false);
   const [recording, setRecording] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentQ, setCurrentQ] = useState(0);
   const [transcript, setTranscript] = useState("");
   const [textInput, setTextInput] = useState("");
+  const [interviewComplete, setInterviewComplete] = useState(alreadyDone);
   const chatEnd = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     chatEnd.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  if (!unlocked) {
+    return (
+      <div className="flex min-h-screen bg-muted/30">
+        <StudentSidebar />
+        <main className="flex-1 flex items-center justify-center p-8">
+          <div className="text-center">
+            <Lock className="w-16 h-16 text-muted-foreground/40 mx-auto mb-4" />
+            <h2 className="font-heading text-2xl font-semibold text-muted-foreground mb-2">Interview Locked</h2>
+            <p className="text-muted-foreground">Complete all test sections first to unlock the AI interview.</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (interviewComplete && !started) {
+    return (
+      <div className="flex min-h-screen bg-muted/30">
+        <StudentSidebar />
+        <main className="flex-1 flex items-center justify-center p-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-md">
+            <div className="w-24 h-24 rounded-full bg-success/10 mx-auto flex items-center justify-center mb-6">
+              <Bot className="w-12 h-12 text-success" />
+            </div>
+            <h2 className="font-heading text-2xl font-semibold mb-2">Interview Already Completed</h2>
+            <p className="text-muted-foreground mb-6">You can only take the AI interview once. View your results in the report.</p>
+            <Button onClick={() => navigate("/student/report")} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
+              View Report →
+            </Button>
+          </motion.div>
+        </main>
+      </div>
+    );
+  }
 
   const startInterview = () => {
     setStarted(true);
@@ -35,7 +79,6 @@ const StudentInterview = () => {
     if (!recording) {
       setRecording(true);
       setTranscript("");
-      // Simulate speech recognition
       const words = "I have a strong background in Computer Science with experience in React and Python development.".split(" ");
       let i = 0;
       const interval = setInterval(() => {
@@ -71,6 +114,9 @@ const StudentInterview = () => {
       }, 1200);
     } else {
       setTimeout(() => {
+        completeStep("interview");
+        completeStep("report");
+        setInterviewComplete(true);
         setMessages((prev) => [...prev, { role: "ai", text: "Thank you! Your interview is complete. You can now view your report." }]);
       }, 1200);
     }
@@ -82,7 +128,7 @@ const StudentInterview = () => {
       <main className="flex-1 flex flex-col">
         <div className="p-8 border-b border-border">
           <h1 className="font-heading text-3xl font-bold">AI Mock Interview</h1>
-          <p className="text-muted-foreground">Voice-based interview · 8-10 minutes</p>
+          <p className="text-muted-foreground">Voice-based interview · 8-10 minutes · One attempt only</p>
         </div>
 
         {!started ? (
@@ -93,7 +139,8 @@ const StudentInterview = () => {
                 <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-pulse-ring" />
               </div>
               <h2 className="font-heading text-2xl font-semibold mb-2">Ready for your interview?</h2>
-              <p className="text-muted-foreground mb-6">The AI interviewer will ask you questions. You can respond via voice or text.</p>
+              <p className="text-muted-foreground mb-2">The AI interviewer will ask you questions. You can respond via voice or text.</p>
+              <p className="text-sm text-destructive font-medium mb-6">⚠ You can only take this interview once.</p>
               <Button onClick={startInterview} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12 text-base font-semibold">
                 Start Interview →
               </Button>
@@ -101,7 +148,6 @@ const StudentInterview = () => {
           </div>
         ) : (
           <>
-            {/* Chat */}
             <div className="flex-1 overflow-auto p-6 space-y-4">
               <AnimatePresence>
                 {messages.map((msg, i) => (
@@ -132,7 +178,6 @@ const StudentInterview = () => {
               <div ref={chatEnd} />
             </div>
 
-            {/* Live Transcript */}
             {recording && transcript && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-6 p-3 bg-accent/50 rounded-xl border border-primary/20 text-sm text-foreground">
                 <span className="text-xs text-primary font-medium mr-2">🎙 Live:</span>
@@ -140,29 +185,38 @@ const StudentInterview = () => {
               </motion.div>
             )}
 
-            {/* Controls */}
-            <div className="p-4 border-t border-border bg-card">
-              <div className="flex items-center gap-3 max-w-3xl mx-auto">
-                <Button
-                  onClick={toggleMic}
-                  size="icon"
-                  className={`w-12 h-12 rounded-full ${recording ? "bg-destructive text-destructive-foreground" : "bg-primary text-primary-foreground"}`}
-                >
-                  {recording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-                </Button>
-                <input
-                  type="text"
-                  value={textInput}
-                  onChange={(e) => setTextInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && sendText()}
-                  placeholder="Or type your answer..."
-                  className="flex-1 h-12 px-4 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
-                />
-                <Button onClick={sendText} size="icon" className="w-12 h-12 rounded-full bg-primary text-primary-foreground">
-                  <Send className="w-5 h-5" />
+            {!interviewComplete && (
+              <div className="p-4 border-t border-border bg-card">
+                <div className="flex items-center gap-3 max-w-3xl mx-auto">
+                  <Button
+                    onClick={toggleMic}
+                    size="icon"
+                    className={`w-12 h-12 rounded-full ${recording ? "bg-destructive text-destructive-foreground" : "bg-primary text-primary-foreground"}`}
+                  >
+                    {recording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                  </Button>
+                  <input
+                    type="text"
+                    value={textInput}
+                    onChange={(e) => setTextInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && sendText()}
+                    placeholder="Or type your answer..."
+                    className="flex-1 h-12 px-4 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
+                  />
+                  <Button onClick={sendText} size="icon" className="w-12 h-12 rounded-full bg-primary text-primary-foreground">
+                    <Send className="w-5 h-5" />
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {interviewComplete && (
+              <div className="p-4 border-t border-border bg-card text-center">
+                <Button onClick={() => navigate("/student/report")} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8">
+                  View Your Report →
                 </Button>
               </div>
-            </div>
+            )}
           </>
         )}
       </main>

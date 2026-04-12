@@ -44,9 +44,8 @@ const AdminUpload = () => {
 
       <main className="flex-1 p-8">
         <h1 className="font-heading text-3xl font-bold mb-2">Upload Students</h1>
-        <p className="text-muted-foreground mb-8">Import students via Excel file (.xlsx)</p>
+        <p className="text-muted-foreground mb-8">Import students via Excel file (.xlsx) — only admin-uploaded students can login</p>
 
-        {/* Template Download */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-accent/50 border border-primary/10 rounded-2xl p-5 flex items-center justify-between mb-8">
           <div>
             <p className="font-semibold text-foreground">Download Template</p>
@@ -96,9 +95,16 @@ const AdminUpload = () => {
                 <CheckCircle className="w-12 h-12 text-success" />
               </motion.div>
               <h2 className="font-heading text-2xl font-semibold mb-2">Import Successful!</h2>
-              <p className="text-muted-foreground mb-6">24 students imported across 4 branches</p>
-              <div className="grid grid-cols-4 gap-4 max-w-lg mx-auto mb-8">
-                {[{ branch: "CSE", count: 10 }, { branch: "ECE", count: 6 }, { branch: "EEE", count: 4 }, { branch: "ME", count: 4 }].map((b) => (
+              <p className="text-muted-foreground mb-6">30 students imported across 6 branches</p>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 max-w-2xl mx-auto mb-8">
+                {[
+                  { branch: "CSE", count: 10 },
+                  { branch: "ECE", count: 5 },
+                  { branch: "EEE", count: 4 },
+                  { branch: "ME", count: 4 },
+                  { branch: "CE", count: 3 },
+                  { branch: "Diploma", count: 4 },
+                ].map((b) => (
                   <div key={b.branch} className="bg-muted/50 rounded-xl p-3 border border-border">
                     <p className="font-heading text-xl font-bold text-primary">{b.count}</p>
                     <p className="text-xs text-muted-foreground">{b.branch}</p>

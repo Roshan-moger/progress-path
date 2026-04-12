@@ -6,9 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GraduationCap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { resetProgress } from "@/lib/progress";
+
+const branches = ["CSE", "ECE", "EEE", "ME", "CE", "Diploma"];
 
 const StudentLogin = () => {
   const [usn, setUsn] = useState("");
+  const [branch, setBranch] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -19,9 +24,14 @@ const StudentLogin = () => {
       toast({ title: "Please enter your USN", variant: "destructive" });
       return;
     }
+    if (!branch) {
+      toast({ title: "Please select your branch", variant: "destructive" });
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
-      localStorage.setItem("vyona_student", JSON.stringify({ usn: usn.toUpperCase(), name: "Arjun" }));
+      localStorage.setItem("vyona_student", JSON.stringify({ usn: usn.toUpperCase(), branch, name: "Arjun" }));
+      resetProgress();
       navigate("/student/dashboard");
     }, 800);
   };
@@ -54,6 +64,19 @@ const StudentLogin = () => {
               onChange={(e) => setUsn(e.target.value)}
               className="mt-2 h-12 rounded-xl text-base"
             />
+          </div>
+          <div>
+            <Label className="text-foreground font-medium">Branch</Label>
+            <Select value={branch} onValueChange={setBranch}>
+              <SelectTrigger className="mt-2 h-12 rounded-xl text-base">
+                <SelectValue placeholder="Select your branch" />
+              </SelectTrigger>
+              <SelectContent>
+                {branches.map((b) => (
+                  <SelectItem key={b} value={b}>{b === "Diploma" ? "Diploma" : `B.Tech ${b}`}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <Button
             type="submit"
