@@ -14,6 +14,7 @@ import StudentInterview from "./pages/StudentInterview.tsx";
 import StudentReport from "./pages/StudentReport.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import AdminUpload from "./pages/AdminUpload.tsx";
+import InterviewRoom from "./pages/InterviewRoom.tsx";
 
 const queryClient = new QueryClient();
 
