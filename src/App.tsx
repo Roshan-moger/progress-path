@@ -15,6 +15,9 @@ import StudentReport from "./pages/StudentReport.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import AdminUpload from "./pages/AdminUpload.tsx";
 import InterviewRoom from "./pages/InterviewRoom.tsx";
+import InterviewRoomV2 from "./pages/InterviewRoomV2.tsx";
+import InterviewRoomV3 from "./pages/InterviewRoomV3.tsx";
+import StudentInterviewSelect from "./pages/StudentInterviewSelect.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +34,10 @@ const App = () => (
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           <Route path="/student/resume" element={<StudentResume />} />
           <Route path="/student/test" element={<StudentTest />} />
-          <Route path="/student/interview" element={<StudentInterview />} />
+          <Route path="/student/interview" element={<StudentInterviewSelect />} />
           <Route path="/student/interview-room" element={<InterviewRoom />} />
+          <Route path="/student/interview-room-v2" element={<InterviewRoomV2 />} />
+          <Route path="/student/interview-room-v3" element={<InterviewRoomV3 />} />
           <Route path="/student/report" element={<StudentReport />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
