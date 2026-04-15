@@ -1,22 +1,26 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LayoutDashboard, Upload, PenTool, Mic, FileText, Lock } from "lucide-react";
 import { isStepUnlocked, isStepCompleted } from "@/lib/progress";
 import type { StepKey } from "@/lib/progress";
+import { useThemeVersion } from "@/lib/theme";
 import { useToast } from "@/hooks/use-toast";
 
-const links: { to: string; icon: typeof LayoutDashboard; label: string; step?: StepKey }[] = [
-  { to: "/student/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { to: "/student/resume", icon: Upload, label: "Resume Upload", step: "resume" },
-  { to: "/student/test", icon: PenTool, label: "Aptitude Test", step: "communication" },
-  { to: "/student/interview", icon: Mic, label: "AI Interview", step: "interview" },
-  { to: "/student/report", icon: FileText, label: "My Report", step: "report" },
+const baseLinks: { path: string; icon: typeof LayoutDashboard; label: string; step?: StepKey }[] = [
+  { path: "/student/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  { path: "/student/resume", icon: Upload, label: "Resume Upload", step: "resume" },
+  { path: "/student/test", icon: PenTool, label: "Aptitude Test", step: "communication" },
+  { path: "/student/interview", icon: Mic, label: "AI Interview", step: "interview" },
+  { path: "/student/report", icon: FileText, label: "My Report", step: "report" },
 ];
 
 const StudentSidebar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const version = useThemeVersion();
+  const prefix = `/${version}`;
+
+  const links = baseLinks.map(l => ({ ...l, to: `${prefix}${l.path}` }));
 
   const student = (() => {
     try { return JSON.parse(localStorage.getItem("vyona_student") || "{}"); } catch { return {}; }
@@ -32,14 +36,13 @@ const StudentSidebar = () => {
   return (
     <aside className="w-64 min-h-screen bg-card border-r border-border flex flex-col">
       <div className="p-6 border-b border-border">
-        <Link to="/" className="font-heading text-xl font-bold text-primary">Vyona.</Link>
+        <Link to={`${prefix}`} className="font-heading text-xl font-bold text-primary">Vyona.</Link>
         <p className="text-xs text-muted-foreground mt-0.5">Student Portal</p>
       </div>
       <nav className="flex-1 p-4 space-y-1">
         {links.map((link) => {
           const active = location.pathname === link.to;
           const locked = link.step ? !isStepUnlocked(link.step) : false;
-          const completed = link.step ? isStepCompleted(link.step) : false;
           return (
             <Link key={link.to} to={locked ? "#" : link.to} onClick={(e) => handleClick(link, e)}>
               <motion.div
