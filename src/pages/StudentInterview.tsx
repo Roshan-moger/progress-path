@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import StudentSidebar from "@/components/StudentSidebar";
 import { Button } from "@/components/ui/button";
-import { Bot, Lock, Camera, Shield, Video, ExternalLink } from "lucide-react";
+import { Bot, Lock, Shield, Video, ExternalLink } from "lucide-react";
 import { isStepUnlocked, isStepCompleted } from "@/lib/progress";
+import { useThemeVersion } from "@/lib/theme";
 import { useToast } from "@/hooks/use-toast";
 
 const StudentInterview = () => {
@@ -12,8 +13,9 @@ const StudentInterview = () => {
   const { toast } = useToast();
   const unlocked = isStepUnlocked("interview");
   const [completed, setCompleted] = useState(isStepCompleted("interview"));
+  const version = useThemeVersion();
+  const prefix = `/${version}`;
 
-  // Listen for interview completion from popup window
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
       if (e.data?.type === "interview-complete") {
@@ -25,11 +27,8 @@ const StudentInterview = () => {
     return () => window.removeEventListener("message", handleMessage);
   }, [toast]);
 
-  // Also poll localStorage for completion (backup)
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (isStepCompleted("interview")) setCompleted(true);
-    }, 2000);
+    const interval = setInterval(() => { if (isStepCompleted("interview")) setCompleted(true); }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -59,7 +58,7 @@ const StudentInterview = () => {
             </div>
             <h2 className="font-heading text-2xl font-semibold mb-2">Interview Completed ✅</h2>
             <p className="text-muted-foreground mb-6">Your AI interview has been recorded. View your results in the report.</p>
-            <Button onClick={() => navigate("/student/report")} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
+            <Button onClick={() => navigate(`${prefix}/student/report`)} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
               View Report →
             </Button>
           </motion.div>
@@ -69,16 +68,14 @@ const StudentInterview = () => {
   }
 
   const openInterviewWindow = () => {
-    const width = screen.width;
-    const height = screen.height;
+    const w = screen.width;
+    const h = screen.height;
     const win = window.open(
-      "/student/interview-room",
+      `${prefix}/student/interview-room`,
       "interview",
-      `width=${width},height=${height},left=0,top=0,menubar=no,toolbar=no,location=no,status=no,scrollbars=no,resizable=no`
+      `width=${w},height=${h},left=0,top=0,menubar=no,toolbar=no,location=no,status=no,scrollbars=no,resizable=no`
     );
-    if (!win) {
-      toast({ title: "Popup Blocked", description: "Please allow popups for this site to start the interview.", variant: "destructive" });
-    }
+    if (!win) toast({ title: "Popup Blocked", description: "Please allow popups for this site.", variant: "destructive" });
   };
 
   return (
@@ -92,7 +89,6 @@ const StudentInterview = () => {
           </div>
           <h2 className="font-heading text-3xl font-bold mb-3">AI Voice Interview</h2>
           <p className="text-muted-foreground mb-4">Secure voice & text based interview with AI. Opens in a <strong>new secure window</strong>.</p>
-
           <div className="bg-card border border-border rounded-2xl p-5 mb-6 text-left space-y-3">
             <h3 className="font-semibold text-foreground flex items-center gap-2"><Shield className="w-4 h-4 text-primary" /> Security Features</h3>
             <ul className="text-sm text-muted-foreground space-y-2">
@@ -103,7 +99,6 @@ const StudentInterview = () => {
               <li className="flex items-start gap-2"><span className="text-destructive font-bold">•</span> One-time interview — no retakes allowed</li>
             </ul>
           </div>
-
           <p className="text-sm text-destructive font-medium mb-6">⚠ You can only take this interview once. Make sure you're ready.</p>
           <Button onClick={openInterviewWindow} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-10 h-13 text-base font-semibold gap-2">
             <ExternalLink className="w-5 h-5" /> Launch Secure Interview
