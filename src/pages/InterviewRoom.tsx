@@ -26,7 +26,7 @@ const speakText = (text: string, onEnd?: () => void) => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.rate = 0.95;
   utterance.pitch = 1;
-  utterance.lang = "en-US";
+  utterance.lang = "en-IN";
   if (onEnd) utterance.onend = onEnd;
   window.speechSynthesis.speak(utterance);
 };

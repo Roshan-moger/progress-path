@@ -78,8 +78,7 @@ const Index = () => {
             </motion.div>
           </div>
 
-          {/* Diagonal cut bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-background" style={{ clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
+       
         </div>
 
         {/* Stats bar */}
@@ -105,8 +104,8 @@ const Index = () => {
       <section className="relative mt-16">
         <div className="bg-secondary text-secondary-foreground py-24 md:py-32 relative">
           <div className="absolute inset-0 hex-pattern opacity-30" />
-          {/* Top diagonal */}
-          <div className="absolute top-0 left-0 right-0 h-16 bg-background" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
+         
+        
 
           <div className="container mx-auto px-6 relative z-10">
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mb-16">
@@ -136,8 +135,7 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Bottom diagonal */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-background" style={{ clipPath: "polygon(100% 0, 0 100%, 100% 100%)" }} />
+         
         </div>
       </section>
 

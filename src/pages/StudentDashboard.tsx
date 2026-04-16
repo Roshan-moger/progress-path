@@ -56,7 +56,7 @@ const StudentDashboard = () => {
         {/* Top banner */}
         <div className="gradient-hero relative overflow-hidden">
           <div className="absolute inset-0 hex-pattern" />
-          <div className="relative z-10 p-8 pb-16">
+          <div className="relative z-10 p-8">
             <div className="flex items-start justify-between">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
                 <Badge className="bg-primary-foreground/15 text-primary-foreground border-primary-foreground/20 mb-3">
@@ -72,7 +72,7 @@ const StudentDashboard = () => {
               </motion.div>
             </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-background" style={{ clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
+          
         </div>
 
         <div className="p-8 -mt-6 relative z-10">
