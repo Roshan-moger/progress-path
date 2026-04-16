@@ -3,7 +3,7 @@ import StudentSidebar from "@/components/StudentSidebar";
 import CircularProgress from "@/components/CircularProgress";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Check, FileText, Mic, PenTool, Upload, BarChart3, BookOpen, Lock } from "lucide-react";
+import { Check, FileText, Mic, PenTool, Upload, BarChart3, BookOpen, Lock, ArrowRight, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { isStepCompleted, isStepUnlocked, getCurrentStep } from "@/lib/progress";
 import type { StepKey } from "@/lib/progress";
@@ -50,63 +50,76 @@ const StudentDashboard = () => {
   const currentActiveStep = steps.find(s => s.step === currentStep);
 
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="flex min-h-screen bg-background">
       <StudentSidebar />
       <main className="flex-1 overflow-auto">
-        <div className="p-8">
-          <div className="flex items-start justify-between mb-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-              <h1 className="font-heading text-3xl font-bold text-foreground">Welcome back, {student.name || "Student"}</h1>
-              <p className="text-muted-foreground mt-1">{student.branch ? (student.branch === "Diploma" ? "Diploma" : `B.Tech ${student.branch}`) : ""} · {student.usn || ""}</p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-              <Badge className="bg-secondary/20 text-secondary-foreground border-secondary/30 px-4 py-1.5 text-sm font-medium">
-                {completedCount === steps.length ? "Assessment Complete" : "Assessment in Progress"}
-              </Badge>
-            </motion.div>
+        {/* Top banner */}
+        <div className="gradient-hero relative overflow-hidden">
+          <div className="absolute inset-0 hex-pattern" />
+          <div className="relative z-10 p-8 pb-16">
+            <div className="flex items-start justify-between">
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                <Badge className="bg-primary-foreground/15 text-primary-foreground border-primary-foreground/20 mb-3">
+                  <Sparkles className="w-3 h-3 mr-1" />
+                  {completedCount === steps.length ? "Assessment Complete" : "Assessment in Progress"}
+                </Badge>
+                <h1 className="font-heading text-3xl md:text-4xl font-black text-primary-foreground">
+                  Welcome back, {student.name || "Student"}
+                </h1>
+                <p className="text-primary-foreground/70 mt-1 font-medium">
+                  {student.branch ? (student.branch === "Diploma" ? "Diploma" : `B.Tech ${student.branch}`) : ""} · {student.usn || ""}
+                </p>
+              </motion.div>
+            </div>
           </div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-background" style={{ clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
+        </div>
 
+        <div className="p-8 -mt-6 relative z-10">
+          {/* Resume parsed banner */}
           {isStepCompleted("resume") && (
             <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-              className="bg-accent/50 border border-primary/20 rounded-2xl p-5 flex items-center gap-4 mb-8">
+              className="bg-card border-2 border-primary/20 rounded-2xl p-5 flex items-center gap-4 mb-8 shadow-lg">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                 <FileText className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-foreground">{student.name || "Student"}_Resume_2025.pdf</p>
+                <p className="font-bold text-foreground">{student.name || "Student"}_Resume_2025.pdf</p>
                 <p className="text-sm text-primary font-medium">Skills detected: React, Node.js, Python, MySQL · 2 projects · 1 Internship</p>
               </div>
-              <span className="text-sm text-primary font-medium flex items-center gap-1"><Check className="w-4 h-4" /> Parsed</span>
+              <span className="text-sm text-primary font-bold flex items-center gap-1"><Check className="w-4 h-4" /> Parsed</span>
             </motion.div>
           )}
 
           <div className="grid lg:grid-cols-3 gap-8">
+            {/* Steps */}
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-xl font-semibold mb-6">Assessment Progress</h2>
+              <h2 className="font-heading text-2xl font-bold mb-6">Assessment Progress</h2>
               <div className="space-y-1">
                 {steps.map((step, i) => {
                   const status = getStatus(step.step);
+                  const Icon = step.icon;
                   return (
                     <motion.div key={step.num} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.08 }}
                       className="flex items-start gap-4">
                       <div className="flex flex-col items-center">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-colors ${
-                          status === "completed" ? "bg-primary border-primary text-primary-foreground" :
-                          status === "active" ? "bg-secondary border-secondary text-secondary-foreground" :
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold border-2 transition-all ${
+                          status === "completed" ? "bg-primary border-primary text-primary-foreground shadow-lg" :
+                          status === "active" ? "bg-secondary border-secondary text-secondary-foreground shadow-lg" :
                           "bg-muted border-border text-muted-foreground"
                         }`}>
-                          {status === "completed" ? <Check className="w-5 h-5" /> : status === "locked" ? <Lock className="w-4 h-4" /> : step.num}
+                          {status === "completed" ? <Check className="w-5 h-5" /> : status === "locked" ? <Lock className="w-4 h-4" /> : <Icon className="w-5 h-5" />}
                         </div>
-                        {i < steps.length - 1 && <div className={`w-0.5 h-12 ${status === "completed" ? "bg-primary" : "bg-border"}`} />}
+                        {i < steps.length - 1 && <div className={`w-0.5 h-14 ${status === "completed" ? "bg-primary" : "bg-border"}`} />}
                       </div>
                       <Link to={status === "locked" ? "#" : step.link} onClick={(e) => handleStepClick(step, e)}
-                        className={`pb-8 pt-1.5 flex-1 ${status === "locked" ? "cursor-not-allowed" : "cursor-pointer"}`}>
+                        className={`pb-8 pt-2 flex-1 group ${status === "locked" ? "cursor-not-allowed" : "cursor-pointer"}`}>
                         <div className="flex items-center gap-2">
-                          <p className={`font-semibold ${status === "locked" ? "text-muted-foreground" : "text-foreground"}`}>{step.title}</p>
-                          {status === "active" && <Badge className="bg-success/15 text-success border-success/20 text-xs">Active</Badge>}
-                          {status === "completed" && <Badge className="bg-primary/15 text-primary border-primary/20 text-xs">Done</Badge>}
+                          <p className={`font-bold text-lg ${status === "locked" ? "text-muted-foreground" : "text-foreground"}`}>{step.title}</p>
+                          {status === "active" && <Badge className="bg-primary/10 text-primary border-primary/20 text-xs font-bold">Active</Badge>}
+                          {status === "completed" && <Badge className="bg-primary/10 text-primary border-primary/20 text-xs font-bold">Done</Badge>}
                         </div>
-                        <p className="text-sm text-muted-foreground">{step.desc}</p>
+                        <p className="text-sm text-muted-foreground mt-0.5">{step.desc}</p>
                       </Link>
                     </motion.div>
                   );
@@ -114,15 +127,17 @@ const StudentDashboard = () => {
               </div>
               {currentActiveStep && (
                 <Link to={currentActiveStep.link}>
-                  <Button className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-base font-semibold mt-4">
-                    Continue: {currentActiveStep.title} →
+                  <Button className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-base font-bold mt-4 group shadow-lg">
+                    Continue: {currentActiveStep.title} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               )}
             </div>
+
+            {/* Progress Card */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-              className="bg-card border border-border rounded-2xl p-7">
-              <h2 className="font-heading text-xl font-semibold mb-6">Overall Progress</h2>
+              className="bg-card border-2 border-border rounded-2xl p-7 shadow-lg">
+              <h2 className="font-heading text-xl font-bold mb-6">Overall Progress</h2>
               <div className="flex justify-center mb-6">
                 <CircularProgress value={overallProgress} size={140} label="Progress" />
               </div>
@@ -130,10 +145,10 @@ const StudentDashboard = () => {
                 {steps.map(s => {
                   const status = getStatus(s.step);
                   return (
-                    <div key={s.step} className="flex items-center justify-between text-sm">
-                      <span className={status === "locked" ? "text-muted-foreground" : "text-foreground"}>{s.title}</span>
+                    <div key={s.step} className="flex items-center justify-between text-sm py-1">
+                      <span className={`font-medium ${status === "locked" ? "text-muted-foreground" : "text-foreground"}`}>{s.title}</span>
                       {status === "completed" ? <Check className="w-4 h-4 text-primary" /> :
-                       status === "active" ? <span className="text-xs text-secondary font-medium">In Progress</span> :
+                       status === "active" ? <span className="text-xs text-primary font-bold">In Progress</span> :
                        <Lock className="w-3 h-3 text-muted-foreground/50" />}
                     </div>
                   );

@@ -15,7 +15,6 @@ export const getVersionFromPath = (pathname: string): ThemeVersion => {
 
 export const getVersionPrefix = (version: ThemeVersion) => `/${version}`;
 
-// CSS variable overrides for each version
 const themeVars: Record<ThemeVersion, Record<string, string>> = {
   v1: {
     "--background": "0 0% 100%",
@@ -88,24 +87,24 @@ const themeVars: Record<ThemeVersion, Record<string, string>> = {
     "--info-foreground": "0 0% 100%",
   },
   v3: {
-    "--background": "0 0% 2%",
-    "--foreground": "0 0% 100%",
-    "--card": "0 0% 6%",
-    "--card-foreground": "0 0% 100%",
-    "--popover": "0 0% 6%",
-    "--popover-foreground": "0 0% 100%",
+    "--background": "0 0% 100%",
+    "--foreground": "0 0% 8%",
+    "--card": "0 0% 100%",
+    "--card-foreground": "0 0% 8%",
+    "--popover": "0 0% 100%",
+    "--popover-foreground": "0 0% 8%",
     "--primary": "25 95% 53%",
     "--primary-foreground": "0 0% 100%",
-    "--secondary": "25 80% 18%",
+    "--secondary": "0 0% 6%",
     "--secondary-foreground": "0 0% 100%",
-    "--muted": "0 0% 10%",
-    "--muted-foreground": "0 0% 65%",
-    "--accent": "25 40% 10%",
-    "--accent-foreground": "25 95% 65%",
+    "--muted": "30 10% 95%",
+    "--muted-foreground": "0 0% 40%",
+    "--accent": "25 80% 95%",
+    "--accent-foreground": "25 95% 40%",
     "--destructive": "0 84% 60%",
     "--destructive-foreground": "0 0% 100%",
-    "--border": "0 0% 15%",
-    "--input": "0 0% 15%",
+    "--border": "25 20% 88%",
+    "--input": "25 20% 88%",
     "--ring": "25 95% 53%",
     "--sidebar-background": "0 0% 4%",
     "--sidebar-foreground": "0 0% 100%",
@@ -124,7 +123,6 @@ const themeVars: Record<ThemeVersion, Record<string, string>> = {
   },
 };
 
-// Additional body class for gradient overrides
 const bodyClasses: Record<ThemeVersion, string> = {
   v1: "theme-v1",
   v2: "theme-v2",
@@ -142,12 +140,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       root.style.setProperty(key, value);
     });
 
-    // Body class for gradient/extra styles
     document.body.classList.remove("theme-v1", "theme-v2", "theme-v3");
     document.body.classList.add(bodyClasses[version]);
 
     return () => {
-      // Cleanup on unmount — restore v1 defaults
       Object.entries(themeVars.v1).forEach(([key, value]) => {
         root.style.setProperty(key, value);
       });
