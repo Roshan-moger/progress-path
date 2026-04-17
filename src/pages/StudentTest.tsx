@@ -5,7 +5,7 @@ import StudentSidebar from "@/components/StudentSidebar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Clock, ChevronRight, Lock } from "lucide-react";
+import { Clock, ChevronRight, Lock, Check } from "lucide-react";
 import { isStepUnlocked, isStepCompleted, completeStep } from "@/lib/progress";
 import type { StepKey } from "@/lib/progress";
 import { useThemeVersion } from "@/lib/theme";
@@ -60,29 +60,87 @@ const StudentTest = () => {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
+  const renderStageIndicator = (currentKey?: string) => (
+    <div className="mb-8">
+      <div className="flex items-center justify-between max-w-3xl mx-auto">
+        {testSections.map((sec, idx) => {
+          const completed = isStepCompleted(sec.key);
+          const isCurrent = currentKey === sec.key;
+          const unlocked = isStepUnlocked(sec.key);
+          return (
+            <div key={sec.key} className="flex items-center flex-1">
+              <div className="flex flex-col items-center flex-1">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center font-heading font-bold text-lg border-2 transition-colors ${
+                    completed
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : isCurrent
+                      ? "bg-primary/15 text-primary border-primary"
+                      : unlocked
+                      ? "bg-card text-foreground border-border"
+                      : "bg-muted text-muted-foreground/50 border-border"
+                  }`}
+                >
+                  {completed ? <Check className="w-5 h-5" /> : unlocked ? idx + 1 : <Lock className="w-4 h-4" />}
+                </motion.div>
+                <p className={`text-xs font-medium mt-2 text-center ${isCurrent ? "text-primary" : "text-muted-foreground"}`}>
+                  Stage {idx + 1}
+                </p>
+                <p className={`text-xs mt-0.5 text-center hidden sm:block ${isCurrent ? "text-foreground font-semibold" : "text-muted-foreground"}`}>
+                  {sec.title.replace(" Test", "").replace(" & Reasoning", "")}
+                </p>
+              </div>
+              {idx < testSections.length - 1 && (
+                <div className={`h-0.5 flex-1 -mt-8 mx-1 transition-colors ${
+                  isStepCompleted(testSections[idx].key) ? "bg-primary" : "bg-border"
+                }`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   if (!activeSection) {
     return (
       <div className="flex min-h-screen bg-muted/30">
         <StudentSidebar />
         <main className="flex-1 p-8">
-          <h1 className="font-heading text-3xl font-bold mb-4">Aptitude Tests</h1>
-          <div className="space-y-4">
-            {testSections.map((sec) => {
+          <h1 className="font-heading text-3xl font-bold mb-2">Aptitude Tests</h1>
+          <p className="text-muted-foreground mb-8">Complete all 3 stages to unlock your AI Interview</p>
+          {renderStageIndicator()}
+          <div className="space-y-4 max-w-3xl mx-auto">
+            {testSections.map((sec, idx) => {
               const completed = isStepCompleted(sec.key);
               const unlocked = isStepUnlocked(sec.key);
               return (
-                <motion.div key={sec.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                <motion.div key={sec.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}
                   className={`bg-card border border-border rounded-2xl p-6 flex items-center justify-between ${!unlocked ? "opacity-50" : ""}`}>
-                  <div><h3 className="font-heading font-semibold text-foreground">{sec.title}</h3><p className="text-sm text-muted-foreground">{sec.subtitle}</p></div>
-                  {completed ? <Badge className="bg-primary/15 text-primary border-primary/20">Completed ✓</Badge> : !unlocked ? <Lock className="w-5 h-5 text-muted-foreground" /> : null}
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-heading font-bold ${completed ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"}`}>
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wider">Stage {idx + 1}</p>
+                      <h3 className="font-heading font-semibold text-foreground">{sec.title}</h3>
+                      <p className="text-sm text-muted-foreground">{sec.subtitle}</p>
+                    </div>
+                  </div>
+                  {completed ? <Badge className="bg-primary/15 text-primary border-primary/20">Completed ✓</Badge> : !unlocked ? <Lock className="w-5 h-5 text-muted-foreground" /> : <Badge variant="outline">Available</Badge>}
                 </motion.div>
               );
             })}
           </div>
           {isStepCompleted("quants") && (
-            <Button onClick={() => navigate(`${prefix}/student/interview`)} className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8">
-              Continue to AI Interview →
-            </Button>
+            <div className="max-w-3xl mx-auto">
+              <Button onClick={() => navigate(`${prefix}/student/interview`)} className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8">
+                Continue to AI Interview →
+              </Button>
+            </div>
           )}
         </main>
       </div>
@@ -109,9 +167,16 @@ const StudentTest = () => {
       <StudentSidebar />
       <main className="flex-1 p-8">
         <div className="flex items-center justify-between mb-6">
-          <div><h1 className="font-heading text-3xl font-bold">{activeSection.title}</h1><p className="text-muted-foreground">{activeSection.subtitle}</p></div>
+          <div>
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
+              Stage {testSections.findIndex(s => s.key === activeSection.key) + 1} of {testSections.length}
+            </p>
+            <h1 className="font-heading text-3xl font-bold">{activeSection.title}</h1>
+            <p className="text-muted-foreground">{activeSection.subtitle}</p>
+          </div>
           <Badge className="bg-accent text-accent-foreground border-border gap-2 px-4 py-2"><Clock className="w-4 h-4" /> 12:45 remaining</Badge>
         </div>
+        {renderStageIndicator(activeSection.key)}
         <Progress value={progress} className="h-2 mb-8 rounded-full" />
         {!finished ? (
           <motion.div key={`${activeSection.key}-${current}`} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
