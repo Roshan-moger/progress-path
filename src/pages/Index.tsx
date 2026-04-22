@@ -32,30 +32,30 @@ const Index = () => {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+      <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-20 md:pt-40 md:pb-28 overflow-hidden">
         {/* Glowing background accents */}
         <div className="absolute inset-0 -z-10 pointer-events-none">
-          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/10 blur-3xl opacity-60" />
-          <div className="absolute top-40 right-0 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl opacity-40" />
-          <div className="absolute bottom-20 left-0 w-[400px] h-[400px] rounded-full bg-secondary/5 blur-3xl opacity-40" />
+          <div className="absolute top-10 sm:top-20 left-1/2 -translate-x-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] rounded-full bg-primary/15 blur-3xl opacity-50 sm:opacity-60" />
+          <div className="absolute top-20 sm:top-40 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-primary/8 blur-3xl opacity-30 sm:opacity-40" />
+          <div className="absolute bottom-10 sm:bottom-20 left-0 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-secondary/8 blur-3xl opacity-30 sm:opacity-40" />
         </div>
 
-        <div className="container mx-auto px-6 text-center relative">
+        <div className="w-full px-4 sm:px-6 lg:px-8 text-center relative max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 backdrop-blur-sm"
           >
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-semibold text-primary tracking-wide">AI-POWERED ASSESSMENT PLATFORM</span>
+            <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-primary flex-shrink-0" />
+            <span className="text-xs sm:text-sm font-semibold text-primary tracking-wide">AI-POWERED ASSESSMENT</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="font-heading text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[1.05] mb-6 tracking-tight max-w-5xl mx-auto"
+            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6 tracking-tight"
           >
             AI-Powered Student{" "}
             <span className="text-primary">Interviews</span> & Assessments
@@ -65,24 +65,24 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
           >
-            Intelligent resume parsing, adaptive aptitude tests, real-time voice interviews, and instant comprehensive reports for students and employers.
+            Intelligent resume parsing, adaptive tests, real-time voice interviews, and instant reports for students and employers.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10 sm:mb-12 px-2"
           >
-            <Link to="/student-login">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-10 h-12 text-base font-bold shadow-lg shadow-primary/30 transition-all group">
-                Student Login <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            <Link to="/student-login" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-bold shadow-lg shadow-primary/30 transition-all group">
+                Student Login <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform hidden sm:inline" />
               </Button>
             </Link>
-            <Link to="/admin-login">
-              <Button size="lg" className="border-2 border-primary text-primary hover:bg-primary/10 rounded-full px-10 h-12 text-base font-bold transition-all">
+            <Link to="/admin-login" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/10 rounded-full px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-bold transition-all">
                 Employer Login
               </Button>
             </Link>
@@ -106,18 +106,18 @@ const Index = () => {
       </section>
 
       {/* STATS BAR */}
-      <section className="container mx-auto px-6 -mt-4 mb-24">
+      <section className="w-full px-4 sm:px-6 lg:px-8 -mt-2 sm:-mt-4 mb-16 sm:mb-20 md:mb-24 max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-card border border-border rounded-2xl shadow-lg shadow-primary/5 backdrop-blur-sm"
+          className="bg-card border border-border rounded-xl sm:rounded-2xl shadow-lg shadow-primary/5 backdrop-blur-sm"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border">
             {stats.map((s, i) => (
-              <div key={s.label} className="py-8 px-4 text-center">
-                <div className="font-heading text-3xl md:text-4xl font-black text-primary mb-1">{s.value}</div>
-                <div className="text-xs md:text-sm text-muted-foreground font-medium">{s.label}</div>
+              <div key={s.label} className="py-6 sm:py-8 px-3 sm:px-4 text-center">
+                <div className="font-heading text-2xl sm:text-3xl md:text-4xl font-black text-primary mb-1">{s.value}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium line-clamp-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -125,24 +125,24 @@ const Index = () => {
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="py-20 md:py-28 bg-card/30">
-        <div className="container mx-auto px-6">
+      <section id="features" className="py-16 sm:py-20 md:py-28 bg-card/30">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto mb-16"
+            className="text-center max-w-2xl mx-auto mb-12 sm:mb-14 md:mb-16"
           >
-            <span className="text-sm font-bold text-primary tracking-widest uppercase">Features</span>
-            <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground leading-tight mt-3 mb-4">
+            <span className="text-xs sm:text-sm font-bold text-primary tracking-widest uppercase">Features</span>
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-foreground leading-tight mt-2 sm:mt-3 mb-3 sm:mb-4">
               Everything you need
             </h2>
-            <p className="text-muted-foreground text-lg">
-              A complete assessment pipeline from resume to report.
+            <p className="text-muted-foreground text-base sm:text-lg px-2">
+              Complete assessment pipeline from resume to report.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {features.map((f, i) => (
               <motion.div
                 key={f.title}
@@ -151,13 +151,13 @@ const Index = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="group bg-card rounded-2xl p-7 border border-border hover:border-primary/40 transition-all duration-300 hover:shadow-lg"
+                className="group bg-card rounded-xl sm:rounded-2xl p-5 sm:p-7 border border-border hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary group-hover:scale-105 transition-all">
-                  <f.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                <div className="w-11 sm:w-12 h-11 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center mb-4 sm:mb-5 group-hover:bg-primary group-hover:scale-105 transition-all">
+                  <f.icon className="w-5 sm:w-6 h-5 sm:h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
-                <h3 className="font-heading text-xl font-bold mb-2 text-foreground">{f.title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{f.desc}</p>
+                <h3 className="font-heading text-lg sm:text-xl font-bold mb-2 text-foreground">{f.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm line-clamp-2 sm:line-clamp-none">{f.desc}</p>
               </motion.div>
             ))}
           </div>

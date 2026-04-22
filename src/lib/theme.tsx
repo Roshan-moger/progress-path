@@ -7,33 +7,33 @@ export const useThemeVersion = () => "default" as ThemeVersion;
 export const getVersionPrefix = () => "";
 
 const themeVars = {
-  // VYONA AI Theme - Orange, Shiny Grey, Blue-tinted Dark
-  "--background": "200 15% 10%", // Shiny dark grey-blue
-  "--foreground": "0 0% 95%", // White text
-  "--card": "200 12% 15%", // Lighter card
-  "--card-foreground": "0 0% 95%",
-  "--popover": "200 12% 15%",
-  "--popover-foreground": "0 0% 95%",
-  "--primary": "25 95% 53%", // Vibrant Orange from VYONA logo
+  // VYONA AI Theme - Deep Black, Silver/Grey, Vibrant Orange
+  "--background": "0 0% 8%",
+  "--foreground": "0 0% 98%",
+  "--card": "220 20% 15%",
+  "--card-foreground": "0 0% 98%",
+  "--popover": "220 20% 15%",
+  "--popover-foreground": "0 0% 98%",
+  "--primary": "25 95% 53%",
   "--primary-foreground": "0 0% 12%",
-  "--secondary": "200 8% 35%", // Grey accent
-  "--secondary-foreground": "0 0% 95%",
-  "--muted": "200 10% 28%",
-  "--muted-foreground": "0 0% 70%",
-  "--accent": "25 85% 60%", // Brighter orange accent
+  "--secondary": "220 15% 64%",
+  "--secondary-foreground": "0 0% 12%",
+  "--muted": "220 12% 28%",
+  "--muted-foreground": "0 0% 75%",
+  "--accent": "220 15% 64%",
   "--accent-foreground": "0 0% 12%",
   "--destructive": "0 84% 60%",
   "--destructive-foreground": "0 0% 12%",
-  "--border": "200 10% 25%",
-  "--input": "200 10% 18%",
+  "--border": "220 15% 22%",
+  "--input": "220 15% 18%",
   "--ring": "25 95% 53%",
-  "--sidebar-background": "200 12% 12%",
-  "--sidebar-foreground": "0 0% 95%",
+  "--sidebar-background": "0 0% 10%",
+  "--sidebar-foreground": "0 0% 98%",
   "--sidebar-primary": "25 95% 53%",
   "--sidebar-primary-foreground": "0 0% 12%",
-  "--sidebar-accent": "25 85% 60%",
+  "--sidebar-accent": "220 15% 64%",
   "--sidebar-accent-foreground": "0 0% 12%",
-  "--sidebar-border": "200 10% 25%",
+  "--sidebar-border": "220 15% 22%",
   "--sidebar-ring": "25 95% 53%",
   "--success": "142 76% 36%",
   "--success-foreground": "0 0% 100%",
