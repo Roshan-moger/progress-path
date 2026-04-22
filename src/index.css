@@ -4,40 +4,40 @@
 @tailwind utilities;
 @layer base {
      :root {
-        --background: 0 0% 100%;
-        --foreground: 160 10% 10%;
-        --card: 0 0% 100%;
-        --card-foreground: 160 10% 10%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 160 10% 10%;
-        --primary: 152 80% 28%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 42 96% 56%;
-        --secondary-foreground: 0 0% 10%;
-        --muted: 150 15% 95%;
-        --muted-foreground: 160 5% 45%;
-        --accent: 150 30% 94%;
-        --accent-foreground: 152 80% 22%;
+        --background: 0 0% 6%;
+        --foreground: 0 0% 95%;
+        --card: 0 0% 12%;
+        --card-foreground: 0 0% 95%;
+        --popover: 0 0% 12%;
+        --popover-foreground: 0 0% 95%;
+        --primary: 25 95% 53%;
+        --primary-foreground: 0 0% 12%;
+        --secondary: 0 0% 40%;
+        --secondary-foreground: 0 0% 95%;
+        --muted: 0 0% 25%;
+        --muted-foreground: 0 0% 70%;
+        --accent: 25 85% 60%;
+        --accent-foreground: 0 0% 12%;
         --destructive: 0 84% 60%;
-        --destructive-foreground: 0 0% 100%;
-        --border: 150 15% 90%;
-        --input: 150 15% 90%;
-        --ring: 152 80% 28%;
+        --destructive-foreground: 0 0% 12%;
+        --border: 0 0% 20%;
+        --input: 0 0% 15%;
+        --ring: 25 95% 53%;
         --radius: 0.75rem;
-        --sidebar-background: 152 80% 28%;
-        --sidebar-foreground: 0 0% 100%;
-        --sidebar-primary: 0 0% 100%;
-        --sidebar-primary-foreground: 152 80% 28%;
-        --sidebar-accent: 152 70% 32%;
-        --sidebar-accent-foreground: 0 0% 100%;
-        --sidebar-border: 152 60% 35%;
-        --sidebar-ring: 42 96% 56%;
-        --success: 152 80% 28%;
+        --sidebar-background: 0 0% 8%;
+        --sidebar-foreground: 0 0% 95%;
+        --sidebar-primary: 25 95% 53%;
+        --sidebar-primary-foreground: 0 0% 12%;
+        --sidebar-accent: 25 85% 60%;
+        --sidebar-accent-foreground: 0 0% 12%;
+        --sidebar-border: 0 0% 20%;
+        --sidebar-ring: 25 95% 53%;
+        --success: 142 76% 36%;
         --success-foreground: 0 0% 100%;
-        --warning: 42 96% 56%;
-        --warning-foreground: 0 0% 10%;
-        --info: 210 80% 55%;
-        --info-foreground: 0 0% 100%;
+        --warning: 38 92% 50%;
+        --warning-foreground: 0 0% 12%;
+        --info: 25 95% 53%;
+        --info-foreground: 0 0% 12%;
         --font-heading: 'Space Grotesk', sans-serif;
         --font-body: 'DM Sans', sans-serif;
     }
@@ -68,38 +68,35 @@
     .font-body {
         font-family: var(--font-body);
     }
-    /* V1 - Green gradient hero */
+    /* VYONA Dark Theme - Orange gradient hero */
     .gradient-hero {
-        background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 50%, hsl(var(--primary) / 0.6) 100%);
+        background: linear-gradient(135deg, #0F0F0F 0%, #1A0A00 40%, #0A0A0A 100%);
+        position: relative;
+    }
+    .gradient-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+        pointer-events: none;
     }
     .gradient-card {
-        background: linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(var(--card)) 100%);
+        background: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.8) 100%);
     }
     .glass {
-        background: hsl(var(--card) / 0.85);
+        background: rgba(20, 20, 20, 0.7);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(249, 115, 22, 0.1);
     }
     .text-gradient {
-        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-    }
-    /* V2 - Blue gradient hero */
-    .theme-v2 .gradient-hero {
-        background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 40%, #3B82F6 100%);
-    }
-    /* V3 - Orange + Black + White */
-    .theme-v3 .gradient-hero {
-        background: linear-gradient(135deg, #0A0A0A 0%, #1A0A00 40%, #0A0A0A 100%);
-    }
-    .theme-v3 .glass {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(12px);
-    }
-    .theme-v3 .gradient-card {
-        background: linear-gradient(180deg, hsl(30 10% 96%) 0%, hsl(0 0% 100%) 100%);
     }
     /* Diagonal section */
     /* Hex pattern */

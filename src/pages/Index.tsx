@@ -28,15 +28,16 @@ const fadeUp = {
 const Index = () => {
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
       {/* HERO */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-        {/* Soft background accents */}
+        {/* Glowing background accents */}
         <div className="absolute inset-0 -z-10 pointer-events-none">
-          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-3xl" />
-          <div className="absolute top-40 right-0 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-3xl" />
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/10 blur-3xl opacity-60" />
+          <div className="absolute top-40 right-0 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl opacity-40" />
+          <div className="absolute bottom-20 left-0 w-[400px] h-[400px] rounded-full bg-secondary/5 blur-3xl opacity-40" />
         </div>
 
         <div className="container mx-auto px-6 text-center relative">
@@ -44,10 +45,10 @@ const Index = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-accent border border-border rounded-full px-4 py-1.5 mb-8"
+            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm"
           >
             <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-semibold text-foreground tracking-wide">AI-POWERED ASSESSMENT PLATFORM</span>
+            <span className="text-xs font-semibold text-primary tracking-wide">AI-POWERED ASSESSMENT PLATFORM</span>
           </motion.div>
 
           <motion.h1
@@ -56,8 +57,8 @@ const Index = () => {
             transition={{ delay: 0.1, duration: 0.6 }}
             className="font-heading text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[1.05] mb-6 tracking-tight max-w-5xl mx-auto"
           >
-            The smartest way to{" "}
-            <span className="text-primary">assess candidates</span>
+            AI-Powered Student{" "}
+            <span className="text-primary">Interviews</span> & Assessments
           </motion.h1>
 
           <motion.p
@@ -66,7 +67,7 @@ const Index = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            AI-powered resume analysis, adaptive aptitude tests, and voice-based mock interviews — all in one platform.
+            Intelligent resume parsing, adaptive aptitude tests, real-time voice interviews, and instant comprehensive reports for students and employers.
           </motion.p>
 
           <motion.div
@@ -76,12 +77,12 @@ const Index = () => {
             className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12"
           >
             <Link to="/student-login">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-12 text-base font-semibold group">
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-10 h-12 text-base font-bold shadow-lg shadow-primary/30 transition-all group">
                 Student Login <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/admin-login">
-              <Button size="lg" variant="outline" className="border-2 border-border hover:bg-accent rounded-full px-8 h-12 text-base font-semibold">
+              <Button size="lg" className="border-2 border-primary text-primary hover:bg-primary/10 rounded-full px-10 h-12 text-base font-bold transition-all">
                 Employer Login
               </Button>
             </Link>
@@ -110,7 +111,7 @@ const Index = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-card border border-border rounded-2xl shadow-sm"
+          className="bg-card border border-border rounded-2xl shadow-lg shadow-primary/5 backdrop-blur-sm"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border">
             {stats.map((s, i) => (
@@ -124,7 +125,7 @@ const Index = () => {
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="py-20 md:py-28 bg-accent/30">
+      <section id="features" className="py-20 md:py-28 bg-card/30">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -221,8 +222,8 @@ const Index = () => {
             viewport={{ once: true }}
             className="bg-primary rounded-3xl p-12 md:p-16 text-center relative overflow-hidden"
           >
-            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-primary-foreground/5 blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-secondary/10 blur-3xl" />
+            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-secondary/20 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-primary-foreground/10 blur-3xl" />
             <div className="relative">
               <Shield className="w-12 h-12 text-primary-foreground/80 mx-auto mb-6" />
               <h2 className="font-heading text-3xl md:text-5xl font-black text-primary-foreground mb-4">
@@ -242,15 +243,15 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-10">
+      <footer className="border-t border-border py-12 bg-card/40">
         <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-              <Sparkles className="w-3.5 h-3.5 text-primary-foreground" />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="font-heading text-lg font-black text-primary">Vyona</span>
+            <span className="font-heading text-lg font-black text-primary">VYONA</span>
           </div>
-          <p className="text-muted-foreground text-sm">© 2026 Vyona. Engineering Intelligence Beyond Human Limits.</p>
+          <p className="text-muted-foreground text-sm">© 2026 Vyona AI. Engineering Intelligence Beyond Human Limits.</p>
         </div>
       </footer>
     </div>
