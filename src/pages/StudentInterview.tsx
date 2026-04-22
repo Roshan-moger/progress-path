@@ -55,7 +55,7 @@ const StudentInterview = () => {
             </div>
             <h2 className="font-heading text-2xl font-semibold mb-2">Interview Completed ✅</h2>
             <p className="text-muted-foreground mb-6">Your AI interview has been recorded. View your results in the report.</p>
-            <Button onClick={() => navigate(`//student/report`)} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
+            <Button onClick={() => navigate(`/student/report`)} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
               View Report →
             </Button>
           </motion.div>

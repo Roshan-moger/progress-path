@@ -4,33 +4,33 @@
 @tailwind utilities;
 @layer base {
      :root {
-        --background: 0 0% 6%;
+        --background: 200 15% 10%;
         --foreground: 0 0% 95%;
-        --card: 0 0% 12%;
+        --card: 200 12% 15%;
         --card-foreground: 0 0% 95%;
-        --popover: 0 0% 12%;
+        --popover: 200 12% 15%;
         --popover-foreground: 0 0% 95%;
         --primary: 25 95% 53%;
         --primary-foreground: 0 0% 12%;
-        --secondary: 0 0% 40%;
+        --secondary: 200 8% 35%;
         --secondary-foreground: 0 0% 95%;
-        --muted: 0 0% 25%;
+        --muted: 200 10% 28%;
         --muted-foreground: 0 0% 70%;
         --accent: 25 85% 60%;
         --accent-foreground: 0 0% 12%;
         --destructive: 0 84% 60%;
         --destructive-foreground: 0 0% 12%;
-        --border: 0 0% 20%;
-        --input: 0 0% 15%;
+        --border: 200 10% 25%;
+        --input: 200 10% 18%;
         --ring: 25 95% 53%;
         --radius: 0.75rem;
-        --sidebar-background: 0 0% 8%;
+        --sidebar-background: 200 12% 12%;
         --sidebar-foreground: 0 0% 95%;
         --sidebar-primary: 25 95% 53%;
         --sidebar-primary-foreground: 0 0% 12%;
         --sidebar-accent: 25 85% 60%;
         --sidebar-accent-foreground: 0 0% 12%;
-        --sidebar-border: 0 0% 20%;
+        --sidebar-border: 200 10% 25%;
         --sidebar-ring: 25 95% 53%;
         --success: 142 76% 36%;
         --success-foreground: 0 0% 100%;
@@ -68,20 +68,33 @@
     .font-body {
         font-family: var(--font-body);
     }
-    /* VYONA Dark Theme - Orange gradient hero */
+    /* VYONA Dark Theme - Shiny Grey with Orange accents */
     .gradient-hero {
-        background: linear-gradient(135deg, #0F0F0F 0%, #1A0A00 40%, #0A0A0A 100%);
+        background: linear-gradient(135deg, #0F1419 0%, #1A202C 40%, #111820 100%);
         position: relative;
+        background-attachment: fixed;
     }
     .gradient-hero::before {
         content: '';
         position: absolute;
         top: 0;
         right: 0;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%);
         pointer-events: none;
+        filter: blur(40px);
+    }
+    .gradient-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(200, 220, 240, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+        filter: blur(50px);
     }
     .gradient-card {
         background: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.8) 100%);
