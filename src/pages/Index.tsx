@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { FileText, Mic, Brain, BarChart3, Upload, Award, ArrowRight, Sparkles, Shield, Star } from "lucide-react";
-import { useThemeVersion } from "@/lib/theme";
 
 const stats = [
   { value: "100+", label: "Questions per assessment" },
@@ -27,8 +26,6 @@ const fadeUp = {
 };
 
 const Index = () => {
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,12 +75,12 @@ const Index = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-12"
           >
-            <Link to={`${prefix}/student-login`}>
+            <Link to="/student-login">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-12 text-base font-semibold group">
                 Student Login <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link to={`${prefix}/admin-login`}>
+            <Link to="/admin-login">
               <Button size="lg" variant="outline" className="border-2 border-border hover:bg-accent rounded-full px-8 h-12 text-base font-semibold">
                 Employer Login
               </Button>
@@ -234,7 +231,7 @@ const Index = () => {
               <p className="text-primary-foreground/80 text-lg mb-8 max-w-lg mx-auto">
                 Join hundreds of colleges & companies using Vyona for smarter assessments.
               </p>
-              <Link to={`${prefix}/student-login`}>
+              <Link to="/student-login">
                 <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-full px-10 h-12 text-base font-bold">
                   Get Started Now <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

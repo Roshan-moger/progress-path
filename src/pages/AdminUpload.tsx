@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FileSpreadsheet, CheckCircle, Download, Plus, UserPlus, ArrowLeft, Sparkles } from "lucide-react";
-import { useThemeVersion } from "@/lib/theme";
 import AdminLayout from "@/components/AdminLayout";
 
 const branches = ["CSE", "ECE", "EEE", "ME", "CE", "Diploma"];
@@ -16,8 +15,6 @@ const AdminUpload = () => {
   const [manualUSN, setManualUSN] = useState("");
   const [manualEmail, setManualEmail] = useState("");
   const [addedStudents, setAddedStudents] = useState<{ name: string; usn: string; branch: string }[]>([]);
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const handleUpload = () => { setStage("processing"); setTimeout(() => setStage("done"), 2500); };
   const handleAddManual = () => {
@@ -192,7 +189,7 @@ const AdminUpload = () => {
             <p className="text-muted-foreground text-sm mb-6">15 students imported to <span className="text-foreground font-semibold">{selectedBranch}</span></p>
             <div className="flex gap-3 justify-center">
               <Button onClick={() => setStage("choose")} variant="outline" className="rounded-xl px-6">Add more</Button>
-              <Link to={`${prefix}/admin/dashboard`}>
+              <Link to={`//admin/dashboard`}>
                 <Button className="rounded-xl px-6">View dashboard</Button>
               </Link>
             </div>

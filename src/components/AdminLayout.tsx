@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, Upload, Settings, LogOut, Bell, Search } from "lucide-react";
-import { useThemeVersion } from "@/lib/theme";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -15,14 +14,12 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children, title, subtitle, actions }: AdminLayoutProps) => {
   const location = useLocation();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const sideLinks = [
-    { to: `${prefix}/admin/dashboard`, icon: LayoutDashboard, label: "Dashboard" },
-    { to: `${prefix}/admin/students`, icon: Users, label: "Students" },
-    { to: `${prefix}/admin/upload`, icon: Upload, label: "Upload" },
-    { to: `${prefix}/admin/settings`, icon: Settings, label: "Settings" },
+    { to: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { to: "/admin/students", icon: Users, label: "Students" },
+    { to: "/admin/upload", icon: Upload, label: "Upload" },
+    { to: "/admin/settings", icon: Settings, label: "Settings" },
   ];
 
   return (
@@ -30,7 +27,7 @@ const AdminLayout = ({ children, title, subtitle, actions }: AdminLayoutProps) =
       {/* Sidebar */}
       <aside className="w-72 min-h-screen bg-card border-r border-border/60 flex flex-col sticky top-0 h-screen">
         <div className="p-6 border-b border-border/60">
-          <Link to={prefix} className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground font-bold text-lg shadow-md">V</div>
             <div>
               <h1 className="font-heading text-lg font-bold text-foreground tracking-tight">Vyona</h1>

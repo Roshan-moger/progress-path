@@ -1,158 +1,55 @@
-import { createContext, useContext, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-export type ThemeVersion = "v1" | "v2" | "v3";
+export type ThemeVersion = "default";
 
-const ThemeContext = createContext<ThemeVersion>("v1");
+export const useThemeVersion = () => "default" as ThemeVersion;
 
-export const useThemeVersion = () => useContext(ThemeContext);
+export const getVersionPrefix = () => "";
 
-export const getVersionFromPath = (pathname: string): ThemeVersion => {
-  if (pathname.startsWith("/v2")) return "v2";
-  if (pathname.startsWith("/v3")) return "v3";
-  return "v1";
-};
-
-export const getVersionPrefix = (version: ThemeVersion) => `/${version}`;
-
-const themeVars: Record<ThemeVersion, Record<string, string>> = {
-  v1: {
-    "--background": "0 0% 100%",
-    "--foreground": "160 10% 10%",
-    "--card": "0 0% 100%",
-    "--card-foreground": "160 10% 10%",
-    "--popover": "0 0% 100%",
-    "--popover-foreground": "160 10% 10%",
-    "--primary": "152 80% 28%",
-    "--primary-foreground": "0 0% 100%",
-    "--secondary": "42 96% 56%",
-    "--secondary-foreground": "0 0% 10%",
-    "--muted": "150 15% 95%",
-    "--muted-foreground": "160 5% 45%",
-    "--accent": "150 30% 94%",
-    "--accent-foreground": "152 80% 22%",
-    "--destructive": "0 84% 60%",
-    "--destructive-foreground": "0 0% 100%",
-    "--border": "150 15% 90%",
-    "--input": "150 15% 90%",
-    "--ring": "152 80% 28%",
-    "--sidebar-background": "152 80% 28%",
-    "--sidebar-foreground": "0 0% 100%",
-    "--sidebar-primary": "0 0% 100%",
-    "--sidebar-primary-foreground": "152 80% 28%",
-    "--sidebar-accent": "152 70% 32%",
-    "--sidebar-accent-foreground": "0 0% 100%",
-    "--sidebar-border": "152 60% 35%",
-    "--sidebar-ring": "42 96% 56%",
-    "--success": "152 80% 28%",
-    "--success-foreground": "0 0% 100%",
-    "--warning": "42 96% 56%",
-    "--warning-foreground": "0 0% 10%",
-    "--info": "210 80% 55%",
-    "--info-foreground": "0 0% 100%",
-  },
-  v2: {
-    "--background": "210 40% 98%",
-    "--foreground": "222 47% 11%",
-    "--card": "0 0% 100%",
-    "--card-foreground": "222 47% 11%",
-    "--popover": "0 0% 100%",
-    "--popover-foreground": "222 47% 11%",
-    "--primary": "221 83% 53%",
-    "--primary-foreground": "0 0% 100%",
-    "--secondary": "210 40% 96%",
-    "--secondary-foreground": "222 47% 11%",
-    "--muted": "210 40% 96%",
-    "--muted-foreground": "215 16% 47%",
-    "--accent": "210 40% 96%",
-    "--accent-foreground": "222 47% 11%",
-    "--destructive": "0 84% 60%",
-    "--destructive-foreground": "0 0% 100%",
-    "--border": "214 32% 91%",
-    "--input": "214 32% 91%",
-    "--ring": "221 83% 53%",
-    "--sidebar-background": "221 83% 53%",
-    "--sidebar-foreground": "0 0% 100%",
-    "--sidebar-primary": "0 0% 100%",
-    "--sidebar-primary-foreground": "221 83% 53%",
-    "--sidebar-accent": "221 73% 60%",
-    "--sidebar-accent-foreground": "0 0% 100%",
-    "--sidebar-border": "221 60% 60%",
-    "--sidebar-ring": "210 40% 96%",
-    "--success": "142 76% 36%",
-    "--success-foreground": "0 0% 100%",
-    "--warning": "38 92% 50%",
-    "--warning-foreground": "0 0% 10%",
-    "--info": "221 83% 53%",
-    "--info-foreground": "0 0% 100%",
-  },
-  v3: {
-    "--background": "0 0% 100%",
-    "--foreground": "0 0% 8%",
-    "--card": "0 0% 100%",
-    "--card-foreground": "0 0% 8%",
-    "--popover": "0 0% 100%",
-    "--popover-foreground": "0 0% 8%",
-    "--primary": "25 95% 53%",
-    "--primary-foreground": "0 0% 100%",
-    "--secondary": "0 0% 6%",
-    "--secondary-foreground": "0 0% 100%",
-    "--muted": "30 10% 95%",
-    "--muted-foreground": "0 0% 40%",
-    "--accent": "25 80% 95%",
-    "--accent-foreground": "25 95% 40%",
-    "--destructive": "0 84% 60%",
-    "--destructive-foreground": "0 0% 100%",
-    "--border": "25 20% 88%",
-    "--input": "25 20% 88%",
-    "--ring": "25 95% 53%",
-    "--sidebar-background": "0 0% 4%",
-    "--sidebar-foreground": "0 0% 100%",
-    "--sidebar-primary": "25 95% 53%",
-    "--sidebar-primary-foreground": "0 0% 100%",
-    "--sidebar-accent": "25 40% 12%",
-    "--sidebar-accent-foreground": "0 0% 100%",
-    "--sidebar-border": "0 0% 15%",
-    "--sidebar-ring": "25 95% 53%",
-    "--success": "142 76% 36%",
-    "--success-foreground": "0 0% 100%",
-    "--warning": "38 92% 50%",
-    "--warning-foreground": "0 0% 100%",
-    "--info": "25 95% 53%",
-    "--info-foreground": "0 0% 100%",
-  },
-};
-
-const bodyClasses: Record<ThemeVersion, string> = {
-  v1: "theme-v1",
-  v2: "theme-v2",
-  v3: "theme-v3",
+const themeVars = {
+  // VYONA AI Theme - Orange, Gray, Black, White
+  "--background": "0 0% 100%",
+  "--foreground": "0 0% 12%",
+  "--card": "0 0% 100%",
+  "--card-foreground": "0 0% 12%",
+  "--popover": "0 0% 100%",
+  "--popover-foreground": "0 0% 12%",
+  "--primary": "25 95% 53%", // Vibrant Orange
+  "--primary-foreground": "0 0% 100%",
+  "--secondary": "0 0% 25%", // Dark Gray
+  "--secondary-foreground": "0 0% 100%",
+  "--muted": "0 0% 94%",
+  "--muted-foreground": "0 0% 45%",
+  "--accent": "25 90% 92%", // Light Orange
+  "--accent-foreground": "25 95% 40%",
+  "--destructive": "0 84% 60%",
+  "--destructive-foreground": "0 0% 100%",
+  "--border": "0 0% 90%",
+  "--input": "0 0% 90%",
+  "--ring": "25 95% 53%",
+  "--sidebar-background": "0 0% 12%",
+  "--sidebar-foreground": "0 0% 100%",
+  "--sidebar-primary": "25 95% 53%",
+  "--sidebar-primary-foreground": "0 0% 100%",
+  "--sidebar-accent": "25 95% 53%",
+  "--sidebar-accent-foreground": "0 0% 100%",
+  "--sidebar-border": "0 0% 25%",
+  "--sidebar-ring": "25 95% 53%",
+  "--success": "142 76% 36%",
+  "--success-foreground": "0 0% 100%",
+  "--warning": "38 92% 50%",
+  "--warning-foreground": "0 0% 10%",
+  "--info": "25 95% 53%",
+  "--info-foreground": "0 0% 100%",
 };
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
-  const version = getVersionFromPath(location.pathname);
-
   useEffect(() => {
     const root = document.documentElement;
-    const vars = themeVars[version];
-    Object.entries(vars).forEach(([key, value]) => {
+    Object.entries(themeVars).forEach(([key, value]) => {
       root.style.setProperty(key, value);
     });
+  }, []);
 
-    document.body.classList.remove("theme-v1", "theme-v2", "theme-v3");
-    document.body.classList.add(bodyClasses[version]);
-
-    return () => {
-      Object.entries(themeVars.v1).forEach(([key, value]) => {
-        root.style.setProperty(key, value);
-      });
-    };
-  }, [version]);
-
-  return (
-    <ThemeContext.Provider value={version}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <>{children}</>;
 };

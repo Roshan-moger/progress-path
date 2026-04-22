@@ -7,7 +7,6 @@ import { Check, FileText, Mic, PenTool, Upload, BarChart3, BookOpen, Lock, Arrow
 import { Badge } from "@/components/ui/badge";
 import { isStepCompleted, isStepUnlocked, getCurrentStep } from "@/lib/progress";
 import type { StepKey } from "@/lib/progress";
-import { useThemeVersion } from "@/lib/theme";
 import { useToast } from "@/hooks/use-toast";
 
 const baseSteps: { num: number; icon: typeof Upload; title: string; step: StepKey; desc: string; path: string }[] = [
@@ -22,10 +21,8 @@ const baseSteps: { num: number; icon: typeof Upload; title: string; step: StepKe
 const StudentDashboard = () => {
   const { toast } = useToast();
   const currentStep = getCurrentStep();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
-  const steps = baseSteps.map(s => ({ ...s, link: `${prefix}${s.path}` }));
+  const steps = baseSteps.map(s => ({ ...s, link: `/${s.path}` }));
 
   const student = (() => {
     try { return JSON.parse(localStorage.getItem("vyona_student") || "{}"); } catch { return {}; }
