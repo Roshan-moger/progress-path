@@ -7,40 +7,40 @@ export const useThemeVersion = () => "default" as ThemeVersion;
 export const getVersionPrefix = () => "";
 
 const themeVars = {
-  // VYONA AI Theme - Orange, Gray, Black, White
-  "--background": "0 0% 100%",
-  "--foreground": "0 0% 12%",
-  "--card": "0 0% 100%",
-  "--card-foreground": "0 0% 12%",
-  "--popover": "0 0% 100%",
-  "--popover-foreground": "0 0% 12%",
-  "--primary": "25 95% 53%", // Vibrant Orange
-  "--primary-foreground": "0 0% 100%",
-  "--secondary": "0 0% 25%", // Dark Gray
-  "--secondary-foreground": "0 0% 100%",
-  "--muted": "0 0% 94%",
-  "--muted-foreground": "0 0% 45%",
-  "--accent": "25 90% 92%", // Light Orange
-  "--accent-foreground": "25 95% 40%",
+  // VYONA AI Theme - Orange, Gray, Black, White (Dark Mode)
+  "--background": "0 0% 6%", // Very dark background
+  "--foreground": "0 0% 95%", // White text
+  "--card": "0 0% 12%", // Dark card
+  "--card-foreground": "0 0% 95%",
+  "--popover": "0 0% 12%",
+  "--popover-foreground": "0 0% 95%",
+  "--primary": "25 95% 53%", // Vibrant Orange from VYONA logo
+  "--primary-foreground": "0 0% 12%",
+  "--secondary": "0 0% 40%", // Medium Gray
+  "--secondary-foreground": "0 0% 95%",
+  "--muted": "0 0% 25%",
+  "--muted-foreground": "0 0% 70%",
+  "--accent": "25 85% 60%", // Brighter orange accent
+  "--accent-foreground": "0 0% 12%",
   "--destructive": "0 84% 60%",
-  "--destructive-foreground": "0 0% 100%",
-  "--border": "0 0% 90%",
-  "--input": "0 0% 90%",
+  "--destructive-foreground": "0 0% 12%",
+  "--border": "0 0% 20%",
+  "--input": "0 0% 15%",
   "--ring": "25 95% 53%",
-  "--sidebar-background": "0 0% 12%",
-  "--sidebar-foreground": "0 0% 100%",
+  "--sidebar-background": "0 0% 8%",
+  "--sidebar-foreground": "0 0% 95%",
   "--sidebar-primary": "25 95% 53%",
-  "--sidebar-primary-foreground": "0 0% 100%",
-  "--sidebar-accent": "25 95% 53%",
-  "--sidebar-accent-foreground": "0 0% 100%",
-  "--sidebar-border": "0 0% 25%",
+  "--sidebar-primary-foreground": "0 0% 12%",
+  "--sidebar-accent": "25 85% 60%",
+  "--sidebar-accent-foreground": "0 0% 12%",
+  "--sidebar-border": "0 0% 20%",
   "--sidebar-ring": "25 95% 53%",
   "--success": "142 76% 36%",
   "--success-foreground": "0 0% 100%",
   "--warning": "38 92% 50%",
-  "--warning-foreground": "0 0% 10%",
+  "--warning-foreground": "0 0% 12%",
   "--info": "25 95% 53%",
-  "--info-foreground": "0 0% 100%",
+  "--info-foreground": "0 0% 12%",
 };
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
