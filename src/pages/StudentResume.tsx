@@ -5,15 +5,12 @@ import StudentSidebar from "@/components/StudentSidebar";
 import { Button } from "@/components/ui/button";
 import { Upload, FileText, CheckCircle, Sparkles } from "lucide-react";
 import { completeStep, isStepCompleted } from "@/lib/progress";
-import { useThemeVersion } from "@/lib/theme";
 
 const StudentResume = () => {
   const alreadyDone = isStepCompleted("resume");
   const [stage, setStage] = useState<"upload" | "analyzing" | "done">(alreadyDone ? "done" : "upload");
   const [dragActive, setDragActive] = useState(false);
   const navigate = useNavigate();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const handleUpload = () => {
     setStage("analyzing");
@@ -68,7 +65,7 @@ const StudentResume = () => {
                   ))}
                 </div>
               </div>
-              <Button onClick={() => navigate(`${prefix}/student/test`)} className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-base font-semibold">
+              <Button onClick={() => navigate(`//student/test`)} className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl text-base font-semibold">
                 Continue to Communication Test →
               </Button>
             </motion.div>

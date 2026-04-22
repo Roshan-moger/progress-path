@@ -5,7 +5,6 @@ import StudentSidebar from "@/components/StudentSidebar";
 import { Button } from "@/components/ui/button";
 import { Bot, Lock, Shield, Video, ExternalLink } from "lucide-react";
 import { isStepUnlocked, isStepCompleted } from "@/lib/progress";
-import { useThemeVersion } from "@/lib/theme";
 import { useToast } from "@/hooks/use-toast";
 
 const StudentInterview = () => {
@@ -13,8 +12,6 @@ const StudentInterview = () => {
   const { toast } = useToast();
   const unlocked = isStepUnlocked("interview");
   const [completed, setCompleted] = useState(isStepCompleted("interview"));
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
@@ -58,7 +55,7 @@ const StudentInterview = () => {
             </div>
             <h2 className="font-heading text-2xl font-semibold mb-2">Interview Completed ✅</h2>
             <p className="text-muted-foreground mb-6">Your AI interview has been recorded. View your results in the report.</p>
-            <Button onClick={() => navigate(`${prefix}/student/report`)} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
+            <Button onClick={() => navigate(`//student/report`)} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8 h-12">
               View Report →
             </Button>
           </motion.div>
@@ -71,7 +68,7 @@ const StudentInterview = () => {
     const w = screen.width;
     const h = screen.height;
     const win = window.open(
-      `${prefix}/student/interview-room`,
+      `//student/interview-room`,
       "interview",
       `width=${w},height=${h},left=0,top=0,menubar=no,toolbar=no,location=no,status=no,scrollbars=no,resizable=no`
     );

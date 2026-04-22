@@ -8,7 +8,6 @@ import { GraduationCap, Sparkles, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { resetProgress } from "@/lib/progress";
-import { useThemeVersion } from "@/lib/theme";
 
 const branches = ["CSE", "ECE", "EEE", "ME", "CE", "Diploma"];
 
@@ -18,8 +17,6 @@ const StudentLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +26,7 @@ const StudentLogin = () => {
     setTimeout(() => {
       localStorage.setItem("vyona_student", JSON.stringify({ usn: usn.toUpperCase(), branch, name: "Arjun" }));
       resetProgress();
-      navigate(`${prefix}/student/dashboard`);
+      navigate("/student/dashboard");
     }, 800);
   };
 
@@ -68,7 +65,7 @@ const StudentLogin = () => {
         <div className="flex-1 flex items-center justify-center p-6 bg-background">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
             className="w-full max-w-md">
-            <Link to={prefix} className="font-heading text-3xl font-black text-primary block mb-1">Vyona.</Link>
+            <Link to="/" className="font-heading text-3xl font-black text-primary block mb-1">Vyona.</Link>
             <p className="text-muted-foreground text-sm mb-10">Sign in to your student account</p>
 
             <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
@@ -112,7 +109,7 @@ const StudentLogin = () => {
             </div>
 
             <p className="text-center text-sm text-muted-foreground mt-6">
-              Are you an admin? <Link to={`${prefix}/admin-login`} className="text-primary font-semibold hover:underline">Login here</Link>
+              Are you an admin? <Link to="/admin-login" className="text-primary font-semibold hover:underline">Login here</Link>
             </p>
           </motion.div>
         </div>

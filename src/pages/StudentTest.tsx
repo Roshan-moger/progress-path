@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, ChevronRight, Lock, Check } from "lucide-react";
 import { isStepUnlocked, isStepCompleted, completeStep } from "@/lib/progress";
 import type { StepKey } from "@/lib/progress";
-import { useThemeVersion } from "@/lib/theme";
 import { useToast } from "@/hooks/use-toast";
 
 const testSections: { key: StepKey; title: string; subtitle: string; questions: { q: string; opts: string[]; correct: number }[] }[] = [
@@ -44,8 +43,6 @@ const testSections: { key: StepKey; title: string; subtitle: string; questions: 
 const StudentTest = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const findActiveSection = () => {
     for (const sec of testSections) {
@@ -137,7 +134,7 @@ const StudentTest = () => {
           </div>
           {isStepCompleted("quants") && (
             <div className="max-w-3xl mx-auto">
-              <Button onClick={() => navigate(`${prefix}/student/interview`)} className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8">
+              <Button onClick={() => navigate(`//student/interview`)} className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl px-8">
                 Continue to AI Interview →
               </Button>
             </div>
@@ -159,7 +156,7 @@ const StudentTest = () => {
   const handleContinue = () => {
     const next = findActiveSection();
     if (next) { setActiveSection(next); setCurrent(0); setSelected(null); setScore(0); setFinished(false); }
-    else navigate(`${prefix}/student/interview`);
+    else navigate(`//student/interview`);
   };
 
   return (

@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { LayoutDashboard, Upload, PenTool, Mic, FileText, Lock } from "lucide-react";
 import { isStepUnlocked, isStepCompleted } from "@/lib/progress";
 import type { StepKey } from "@/lib/progress";
-import { useThemeVersion } from "@/lib/theme";
 import { useToast } from "@/hooks/use-toast";
 
 const baseLinks: { path: string; icon: typeof LayoutDashboard; label: string; step?: StepKey }[] = [
@@ -17,10 +16,8 @@ const baseLinks: { path: string; icon: typeof LayoutDashboard; label: string; st
 const StudentSidebar = () => {
   const location = useLocation();
   const { toast } = useToast();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
-  const links = baseLinks.map(l => ({ ...l, to: `${prefix}${l.path}` }));
+  const links = baseLinks.map(l => ({ ...l, to: l.path }));
 
   const student = (() => {
     try { return JSON.parse(localStorage.getItem("vyona_student") || "{}"); } catch { return {}; }
@@ -36,7 +33,7 @@ const StudentSidebar = () => {
   return (
     <aside className="w-64 min-h-screen bg-card border-r border-border flex flex-col">
       <div className="p-6 border-b border-border">
-        <Link to={`${prefix}`} className="font-heading text-xl font-bold text-primary">Vyona.</Link>
+        <Link to="/" className="font-heading text-xl font-bold text-primary">Vyona.</Link>
         <p className="text-xs text-muted-foreground mt-0.5">Student Portal</p>
       </div>
       <nav className="flex-1 p-4 space-y-1">

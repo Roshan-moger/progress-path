@@ -9,7 +9,6 @@ import {
   Users, FileSpreadsheet, GraduationCap, TrendingUp, Clock, CheckCircle,
   ChevronRight, ArrowLeft, Search, MoreHorizontal, Sparkles,
 } from "lucide-react";
-import { useThemeVersion } from "@/lib/theme";
 import AdminLayout from "@/components/AdminLayout";
 
 type BranchKey = "CSE" | "ECE" | "EEE" | "ME" | "CE" | "Diploma";
@@ -57,8 +56,6 @@ const accentMap: Record<string, { bg: string; text: string; ring: string; soft: 
 const AdminDashboard = () => {
   const [selectedBranch, setSelectedBranch] = useState<BranchKey | null>(null);
   const [search, setSearch] = useState("");
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const allStudents = allBranches.flatMap(b => branchData[b].students.map(s => ({ ...s, branch: b })));
   const totalStudents = allStudents.length;
@@ -85,7 +82,7 @@ const AdminDashboard = () => {
       title="Dashboard"
       subtitle="Track student assessment progress across all branches"
       actions={
-        <Link to={`${prefix}/admin/upload`}>
+        <Link to={`//admin/upload`}>
           <Button className="rounded-xl gap-2 h-10 shadow-sm">
             <FileSpreadsheet className="w-4 h-4" /> Import Students
           </Button>

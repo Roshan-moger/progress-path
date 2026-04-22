@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Shield, Sparkles, Lock, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useThemeVersion } from "@/lib/theme";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -14,8 +13,6 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const version = useThemeVersion();
-  const prefix = `/${version}`;
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +20,7 @@ const AdminLogin = () => {
     setLoading(true);
     setTimeout(() => {
       localStorage.setItem("vyona_admin", "true");
-      navigate(`${prefix}/admin/dashboard`);
+      navigate("/admin/dashboard");
     }, 800);
   };
 
@@ -36,7 +33,7 @@ const AdminLogin = () => {
           <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-white/5 blur-3xl" />
         </div>
         <div className="relative z-10 flex flex-col justify-between p-12 text-primary-foreground w-full">
-          <Link to={prefix} className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center font-bold text-lg">V</div>
             <span className="font-heading text-xl font-bold">Vyona</span>
           </Link>
@@ -57,7 +54,7 @@ const AdminLogin = () => {
       <div className="flex-1 flex items-center justify-center p-6">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
           className="w-full max-w-md">
-          <Link to={prefix} className="lg:hidden font-heading text-2xl font-bold text-primary block mb-8">Vyona.</Link>
+          <Link to="/" className="lg:hidden font-heading text-2xl font-bold text-primary block mb-8">Vyona.</Link>
 
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
             <Shield className="w-6 h-6 text-primary" />
