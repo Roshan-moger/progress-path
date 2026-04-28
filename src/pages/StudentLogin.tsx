@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -65,7 +65,7 @@ const StudentLogin = () => {
         <div className="flex-1 flex items-center justify-center p-6 bg-background">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
             className="w-full max-w-md">
-            <Link to="/" className="font-heading text-3xl font-black text-primary block mb-1">Vyona.</Link>
+            <button onClick={() => navigate("/")} className="font-heading text-3xl font-black text-primary block mb-1 hover:opacity-80 transition-opacity cursor-pointer">Vyona.</button>
             <p className="text-muted-foreground text-sm mb-10">Sign in to your student account</p>
 
             <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
