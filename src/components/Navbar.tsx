@@ -10,7 +10,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/98 backdrop-blur-md shadow-xl"
+      className="header-bar"
     >
       <div className="w-full flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <button onClick={() => navigate("/")} className="flex items-center gap-2 sm:gap-3 font-heading text-xl sm:text-2xl font-black tracking-tight group flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">

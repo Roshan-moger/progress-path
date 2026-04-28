@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import StudentSidebar from "@/components/StudentSidebar";
 import CircularProgress from "@/components/CircularProgress";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Check, FileText, Mic, PenTool, Upload, BarChart3, BookOpen, Lock, ArrowRight, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { isStepCompleted, isStepUnlocked, getCurrentStep } from "@/lib/progress";
@@ -19,10 +19,11 @@ const baseSteps: { num: number; icon: typeof Upload; title: string; step: StepKe
 ];
 
 const StudentDashboard = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const currentStep = getCurrentStep();
 
-  const steps = baseSteps.map(s => ({ ...s, link: `/${s.path}` }));
+  const steps = baseSteps.map(s => ({ ...s, link: s.path }));
 
   const student = (() => {
     try { return JSON.parse(localStorage.getItem("vyona_student") || "{}"); } catch { return {}; }
@@ -51,9 +52,8 @@ const StudentDashboard = () => {
       <StudentSidebar />
       <main className="flex-1 overflow-auto">
         {/* Top banner */}
-        <div className="gradient-hero relative overflow-hidden">
-          <div className="absolute inset-0 hex-pattern" />
-          <div className="relative z-10 p-8">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary/8 via-accent/5 to-background p-8 border-b border-border">
+          <div className="relative z-10">
             <div className="flex items-start justify-between">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
                 <Badge className="bg-primary-foreground/15 text-primary-foreground border-primary-foreground/20 mb-3">
