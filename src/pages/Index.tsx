@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { FileText, Mic, Brain, BarChart3, Upload, Award, ArrowRight, Sparkles, Shield, Star } from "lucide-react";
@@ -26,6 +26,7 @@ const fadeUp = {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -76,16 +77,12 @@ const Index = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10 sm:mb-12 px-2"
           >
-            <Link to="/student-login" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-bold shadow-lg shadow-primary/30 transition-all group">
-                Student Login <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform hidden sm:inline" />
-              </Button>
-            </Link>
-            <Link to="/admin-login" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/10 rounded-full px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-bold transition-all">
-                Employer Login
-              </Button>
-            </Link>
+            <Button onClick={() => navigate("/student-login")} size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-bold shadow-lg shadow-primary/30 transition-all group">
+              Student Login <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform hidden sm:inline" />
+            </Button>
+            <Button onClick={() => navigate("/admin-login")} size="lg" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/10 rounded-full px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-bold transition-all">
+              Employer Login
+            </Button>
           </motion.div>
 
           {/* Trust indicator */}
@@ -232,11 +229,9 @@ const Index = () => {
               <p className="text-primary-foreground/80 text-lg mb-8 max-w-lg mx-auto">
                 Join hundreds of colleges & companies using Vyona for smarter assessments.
               </p>
-              <Link to="/student-login">
-                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-full px-10 h-12 text-base font-bold">
-                  Get Started Now <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              <Button onClick={() => navigate("/student-login")} size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-full px-10 h-12 text-base font-bold">
+                Get Started Now <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </motion.div>
         </div>

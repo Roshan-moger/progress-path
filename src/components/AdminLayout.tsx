@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, Users, Upload, Settings, LogOut, Bell, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children, title, subtitle, actions }: AdminLayoutProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const sideLinks = [
     { to: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -27,13 +28,13 @@ const AdminLayout = ({ children, title, subtitle, actions }: AdminLayoutProps) =
       {/* Sidebar */}
       <aside className="w-72 min-h-screen bg-card border-r border-border/60 flex flex-col sticky top-0 h-screen">
         <div className="p-6 border-b border-border/60">
-          <Link to="/" className="flex items-center gap-3">
+          <button onClick={() => navigate("/")} className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground font-bold text-lg shadow-md">V</div>
             <div>
               <h1 className="font-heading text-lg font-bold text-foreground tracking-tight">Vyona</h1>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Admin Suite</p>
             </div>
-          </Link>
+          </button>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -41,7 +42,7 @@ const AdminLayout = ({ children, title, subtitle, actions }: AdminLayoutProps) =
           {sideLinks.map((link) => {
             const active = location.pathname === link.to;
             return (
-              <Link key={link.to} to={link.to}>
+              <button key={link.to} onClick={() => navigate(link.to)} className="w-full text-left">
                 <motion.div
                   whileHover={{ x: 2 }}
                   className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
@@ -59,7 +60,7 @@ const AdminLayout = ({ children, title, subtitle, actions }: AdminLayoutProps) =
                   <link.icon className="w-4 h-4" />
                   {link.label}
                 </motion.div>
-              </Link>
+              </button>
             );
           })}
         </nav>

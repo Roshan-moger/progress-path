@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LayoutDashboard, Upload, PenTool, Mic, FileText, Lock } from "lucide-react";
 import { isStepUnlocked, isStepCompleted } from "@/lib/progress";
@@ -15,6 +15,7 @@ const baseLinks: { path: string; icon: typeof LayoutDashboard; label: string; st
 
 const StudentSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const links = baseLinks.map(l => ({ ...l, to: l.path }));
@@ -33,7 +34,7 @@ const StudentSidebar = () => {
   return (
     <aside className="w-64 min-h-screen bg-card border-r border-border flex flex-col">
       <div className="p-6 border-b border-border">
-        <Link to="/" className="font-heading text-xl font-bold text-primary">Vyona.</Link>
+        <button onClick={() => navigate("/")} className="font-heading text-xl font-bold text-primary cursor-pointer hover:opacity-80 transition-opacity">Vyona.</button>
         <p className="text-xs text-muted-foreground mt-0.5">Student Portal</p>
       </div>
       <nav className="flex-1 p-4 space-y-1">
@@ -41,7 +42,10 @@ const StudentSidebar = () => {
           const active = location.pathname === link.to;
           const locked = link.step ? !isStepUnlocked(link.step) : false;
           return (
-            <Link key={link.to} to={locked ? "#" : link.to} onClick={(e) => handleClick(link, e)}>
+            <button key={link.to} onClick={() => {
+              if (!locked) navigate(link.to);
+              else handleClick(link, {} as React.MouseEvent);
+            }} className="w-full text-left">
               <motion.div
                 whileHover={locked ? {} : { x: 4 }}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
@@ -53,7 +57,7 @@ const StudentSidebar = () => {
                 {locked ? <Lock className="w-5 h-5" /> : <link.icon className="w-5 h-5" />}
                 {link.label}
               </motion.div>
-            </Link>
+            </button>
           );
         })}
       </nav>
